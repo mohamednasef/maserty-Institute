@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Stepper Example</title>
+   
+    <style>body {
+        direction: rtl;
+        font-family: Arial, sans-serif;
+    }
+    
+    .stepper {
+        width: 300px;
+        margin: 50px auto;
+    }
+    
+    .stepper ul {
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .stepper .step {
+        width: 40px;
+        height: 40px;
+        background: #ddd;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    
+    .stepper .step.active {
+        background: #4FB19D;
+        color: #fff;
+    }
+    
+    .content {
+        margin-top: 20px;
+    }
+    
+    .step-content {
+        display: none;
+    }
+    
+    .step-content.active {
+        display: block;
+    }
+    
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    .buttons .btn {
+        border-radius: 30px;
+    background-color: #4FB19D;
+    padding: 10px 30px;
+    color: #fff;
+    cursor: pointer;
+    border: 0;
+    font-weight: 600;
+    }
+    
+    .buttons .btn:disabled {
+        background: #ddd;
+        cursor: not-allowed;
+    }
+    </style>
+</head>
+<body>
+    <div class="stepper">
+        <ul>
+            <li class="step active"> 1</li>
+            <li class="step"> 2</li>
+            <li class="step"> 3</li>
+            <li class="step"> 4</li>
+        </ul>
+        <div class="content">
+            <div class="step-content active">محتوى الخطوة 1</div>
+            <div class="step-content">محتوى الخطوة 2</div>
+            <div class="step-content">محتوى الخطوة 3</div>
+            <div class="step-content">محتوى الخطوة 4</div>
+        </div>
+        <div class="buttons">
+            <button id="prev" class="btn">السابق</button>
+            <button id="next" class="btn">التالي</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    let currentStep = 0;
+    const steps = $(".step");
+    const contents = $(".step-content");
+
+    function setActiveStep() {
+        steps.removeClass("active");
+        $(steps[currentStep]).addClass("active");
+        contents.removeClass("active");
+        $(contents[currentStep]).addClass("active");
+        $("#prev").prop("disabled", currentStep === 0);
+        $("#next").prop("disabled", currentStep === steps.length - 1);
+    }
+
+    $("#prev").click(function() {
+        if (currentStep > 0) {
+            currentStep--;
+            setActiveStep();
+        }
+    });
+
+    $("#next").click(function() {
+        if (currentStep < steps.length - 1) {
+            currentStep++;
+            setActiveStep();
+        }
+    });
+
+    setActiveStep();
+});
+
+    </script>
+</body>
+</html>
